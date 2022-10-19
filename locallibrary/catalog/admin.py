@@ -10,14 +10,33 @@ admin.site.register(Language)
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'last_name',
+        'first_name',
+        'date_of_birth',
+        'date_of_death',
+    )
 
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'title',
+        'author',
+        'display_genre',
+    )
 
 
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'book',
+        'status',
+        'due_back',
+        'imprint',
+    )
+
+    list_filter = (
+        'status',
+        'due_back',
+    )
