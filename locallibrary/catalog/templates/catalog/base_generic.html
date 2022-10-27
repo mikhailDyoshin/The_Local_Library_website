@@ -39,7 +39,7 @@
                                 </ul>
                             {% endif %}
                         
-                        {% if perms.catalog.can_mark_returned %}
+                        {% if perms.catalog.can_display_all_borrowed %}
                             <ul class="sidebar-nav">
                                 <li><a href="{% url 'all-borrowed' %}">All Borrowed</a></li>
                             </ul>
