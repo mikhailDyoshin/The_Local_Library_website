@@ -21,5 +21,9 @@
         <p>There are no authors in the library.</p>
     {% endif %}
 
+    {% if perms.catalog.can_change_authors %}
+        <a href="{% url 'author-create' %}">Add Author</a>
+    {% endif %}
+
 {% endblock %}
     

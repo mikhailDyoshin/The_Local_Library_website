@@ -37,6 +37,11 @@ class Book(models.Model):
 
     language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
+    class Meta:
+        permissions = (
+            ("can_change_books", "Can create, update or delete a book"),
+        )
+
     def __str__(self):
         return self.title
 
@@ -106,6 +111,10 @@ class Author(models.Model):
 
     class Meta:
         ordering = ['last_name', 'first_name']
+
+        permissions = (
+            ("can_change_authors", "Can create, update or delete an author"),
+        )
 
     def get_absolute_url(self):
         return reverse('author-detail', args=[str(self.id)])

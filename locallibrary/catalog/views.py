@@ -1,3 +1,5 @@
+from ast import Del
+from curses.ascii import CR
 import datetime
 from django.shortcuts import render, get_object_or_404
 from .models import Book, Author, BookInstance, Genre
@@ -139,7 +141,9 @@ def renew_book_librarian(request, pk):
     return render(request, 'catalog/book_renew_librarian.html', context)
 
 
-class AuthorCreate(CreateView):
+# Views for Aurhor form
+class AuthorCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'catalog.can_change_authors'
     model = Author
     fields = [
         'first_name',
@@ -151,11 +155,39 @@ class AuthorCreate(CreateView):
     initial = {'date_of_death': datetime.date.today()}
 
 
-class AuthorUpdate(UpdateView):
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.can_change_authors'
     model = Author
     fields = '__all__'
 
 
-class AuthorDelete(DeleteView):
+class AuthorDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.can_change_authors'
     model = Author
-    seccess_url = reverse_lazy('authors')
+    success_url = reverse_lazy('authors')
+
+
+# Views for Book form
+class BookCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'catalog.can_change_books'
+    model = Book
+    fields = [
+        'title',
+        'author',
+        'summary',
+        'isbn',
+        'genre',
+        'language',
+    ]
+
+
+class BookUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'catalog.can_change_books'
+    model = Book
+    fields = '__all__'
+
+
+class BookDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'catalog.can_change_books'
+    model = Book
+    success_url = reverse_lazy('books')
